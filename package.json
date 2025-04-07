@@ -1,8 +1,8 @@
 {
-  "name": "literallycanvas",
-  "version": "1.0.0",
+  "name": "dtp-literallycanvas",
+  "version": "1.0.6",
   "description": "HTML5 drawing widget",
-  "main": "lib/js",
+  "main": "lib/js/index.js",
   "scripts": {
     "buildcore": "gulp newcore",
     "prepublish": "yarn buildcore && gulp commonjs",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/literallycanvas/literallycanvas.git"
+    "url": "git://github.com/literallycanvas/literallycanvas"
   },
   "keywords": [
     "html5",

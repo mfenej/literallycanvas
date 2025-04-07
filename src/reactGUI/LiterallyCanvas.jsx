@@ -1,6 +1,5 @@
 const React = require('../reactGUI/React-shim');
 const createReactClass = require('../reactGUI/createReactClass-shim');
-const { findDOMNode } = require('../reactGUI/ReactDOM-shim');
 const { classSet } = require('../core/util');
 const Picker = require('./Picker');
 const Options = require('./Options');
@@ -15,18 +14,11 @@ require('../optionsStyles/polygon-and-stroke-width');
 require('../optionsStyles/null');
 
 
-const CanvasContainer = createReactClass({
-  displayName: 'CanvasContainer',
-  shouldComponentUpdate() {
-    // Avoid React trying to control this DOM
-    return false;
-  },
-  render() {
-    return (
-      <div key="literallycanvas" className="lc-drawing with-gui" />
-    );
-  }
-})
+const CanvasContainer = React.forwardRef((props, ref) => {
+  return (
+    <div ref={ref} key="literallycanvas" className="lc-drawing with-gui" />
+  );
+});
 
 const LiterallyCanvas = createReactClass({
   displayName: 'LiterallyCanvas',
@@ -34,10 +26,10 @@ const LiterallyCanvas = createReactClass({
   getDefaultProps() { return defaultOptions; },
 
   bindToModel() {
-    const canvasContainerEl = findDOMNode(this.canvas);
+    const canvasContainerEl = this.canvas;
     const opts = this.props;
     this.lc.bindToElement(canvasContainerEl);
-
+  
     if (typeof this.lc.opts.onInit === 'function') {
       this.lc.opts.onInit(this.lc);
     }
@@ -86,7 +78,7 @@ const LiterallyCanvas = createReactClass({
 
     return (
       <div className={`literally ${topOrBottomClassName}`} style={style}>
-        <CanvasContainer ref={item => this.canvas = item} />
+        <CanvasContainer ref={ref => this.canvas = ref} />
         <Picker {...pickerProps} />
         <Options lc={lc} imageURLPrefix={imageURLPrefix} />
       </div>
